@@ -37,8 +37,8 @@ $query = mysqli_query($con, $sql);
                                 <td><?= $data['last_login'] ?></td>
                                 <td>status</td>
                                 <td>
-                                    <a href="?page<?= $_GET['page'] ?>&function=update&id=<?= $data['uid'] ?>" class="btn btn-warning">Edit</a>
-                                    <a href="" class="btn btn-sm btn-danger">Delete</a>
+                                    <a href="?page=<?= $_GET['page'] ?>&function=update&id=<?= $data['uid'] ?>" class="btn btn-warning">Edit</a>
+                                    <a href="?page=<?= $_GET['page'] ?>&function=delete&id=<?= $data['uid'] ?>" onclick="return confirm('Do you want to delete this user?')" class="btn btn-sm btn-danger">Delete</a>
                                 </td>
 
 
