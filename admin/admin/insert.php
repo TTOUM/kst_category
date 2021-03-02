@@ -2,9 +2,14 @@
 if (isset($_POST) && !empty($_POST)) {
     $username = $_POST["username"];
     $password = sha1(md5($_POST["password"]));
-
     $firstname = $_POST["firstname"];
     $lastname = $_POST["lastname"];
+    $create_date = date("Y-m-d H:i:s");
+    if ($_POST['position'] == 'User') {
+        $position = 0;
+    } else {
+        $position = 1;
+    }
     if (!empty($username)) {
         $sql_check = "SELECT*FROM users WHERE username='$username'";
         $query_check = mysqli_query($con, $sql_check);
@@ -12,12 +17,13 @@ if (isset($_POST) && !empty($_POST)) {
         if ($row_check > 0) {
             $alert = '<script type="text/javascript">';
             $alert .= 'alert("User has already!!");';
+            $alert .= 'window.location.href="?page=admin";';
             $alert .= '</script>';
             echo $alert;
             exit();
         } else {
-            $sql = "INSERT INTO users (uid,username,pass,firstname,lastname)
-                            VALUES ('','$username','$password','$firstname','$lastname')";
+            $sql = "INSERT INTO users (uid,username,pass,firstname,lastname,position,create_date)
+                            VALUES ('','$username','$password','$firstname','$lastname','$position','$create_date')";
             if (mysqli_query($con, $sql)) {
                 $alert = '<script type="text/javascript">';
                 $alert .= 'alert("Added Successfully!!");';
@@ -47,6 +53,20 @@ if (isset($_POST) && !empty($_POST)) {
                     <div class="mb-2 col-lg-6">
                         <label class="form-label">Password</label>
                         <input type="text" class="form-control" name="password" required />
+                    </div>
+                    <!-- RadioButton -->
+                    <label class="form-label">Position</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="position">
+                        <label class="form-check-label" value="Admin">
+                            Admin
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="position">
+                        <label class="form-check-label" value="User">
+                            User
+                        </label>
                     </div>
 
                     <div class="mb-2 col-lg-6">
